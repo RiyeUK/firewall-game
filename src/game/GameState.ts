@@ -3,7 +3,8 @@ import { getGameConfig } from "./constants";
 export class GameState {
 	private _score: number = 0;
 	private _isGameOver: boolean = false;
-	private _hp: number = getGameConfig().PLANET_HP;
+	private _hasStarted: boolean = false;
+	private _hp: number = getGameConfig().START_HP;
 	private _gameTime: number = 0;
 	private listeners: Set<() => void> = new Set();
 
@@ -32,6 +33,10 @@ export class GameState {
 		return this._isGameOver;
 	}
 
+	get hasStarted(): boolean {
+		return this._hasStarted;
+	}
+
 	get gameTime(): number {
 		return this._gameTime;
 	}
@@ -50,15 +55,29 @@ export class GameState {
 		if (this._hp <= 0) this.gameOver();
 	}
 
+	heal(): void {
+		const maxHp = getGameConfig().MAX_HP;
+		if (this._hp < maxHp) {
+			this._hp += 1;
+			this.notify();
+		}
+	}
+
 	gameOver(): void {
 		this._isGameOver = true;
+		this.notify();
+	}
+
+	start(): void {
+		this._hasStarted = true;
 		this.notify();
 	}
 
 	reset(): void {
 		this._score = 0;
 		this._isGameOver = false;
-		this._hp = getGameConfig().PLANET_HP;
+		this._hasStarted = false;
+		this._hp = getGameConfig().START_HP;
 		this._gameTime = 0;
 		this.notify();
 	}

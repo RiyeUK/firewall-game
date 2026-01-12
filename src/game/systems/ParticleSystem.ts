@@ -98,6 +98,24 @@ export class ParticleSystem {
 		particle.isActive = false;
 	}
 
+	clearParticlesNearCircle(
+		centerX: number,
+		centerY: number,
+		radius: number,
+	): void {
+		for (const particle of this.particles) {
+			if (!particle.isActive) continue;
+
+			const dx = particle.position.x - centerX;
+			const dy = particle.position.y - centerY;
+			const distance = Math.sqrt(dx * dx + dy * dy);
+
+			if (distance < radius) {
+				particle.isActive = false;
+			}
+		}
+	}
+
 	destroy(): void {
 		for (const particle of this.particles) {
 			this.container.removeChild(particle.graphics);

@@ -7,7 +7,8 @@ export function getGameConfig() {
 		CANVAS_WIDTH: width,
 		CANVAS_HEIGHT: height,
 
-		PLANET_HP: 4,
+		START_HP: 4,
+		MAX_HP: 6,
 
 		// Central circle
 		CIRCLE_CENTER_X: width / 2,
@@ -16,7 +17,7 @@ export function getGameConfig() {
 
 		// Defense wall
 		WALL_DISTANCE: minDimension * 0.25,
-		WALL_ARC_ANGLE: Math.PI / 8,
+		WALL_ARC_ANGLE: Math.PI / 5,
 		WALL_THICKNESS: minDimension * 0.008, // ~0.8% of min dimension
 
 		// Particles
