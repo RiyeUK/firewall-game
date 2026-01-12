@@ -1,4 +1,5 @@
 import { getGameConfig } from "./constants";
+import { getTodaysBestScore, updateBestScore } from "./utils/scoreTracking";
 
 export class GameState {
 	private _score: number = 0;
@@ -6,6 +7,7 @@ export class GameState {
 	private _hasStarted: boolean = false;
 	private _hp: number = getGameConfig().START_HP;
 	private _gameTime: number = 0;
+	private _isNewBest: boolean = false;
 	private listeners: Set<() => void> = new Set();
 
 	subscribe(listener: () => void): () => void {
@@ -41,6 +43,14 @@ export class GameState {
 		return this._gameTime;
 	}
 
+	get isNewBest(): boolean {
+		return this._isNewBest;
+	}
+
+	get todaysBestScore(): number {
+		return getTodaysBestScore();
+	}
+
 	incrementScore(amount: number): void {
 		this._score += amount;
 		this.notify();
@@ -65,6 +75,7 @@ export class GameState {
 
 	gameOver(): void {
 		this._isGameOver = true;
+		this._isNewBest = updateBestScore(this._score);
 		this.notify();
 	}
 
@@ -79,6 +90,7 @@ export class GameState {
 		this._hasStarted = false;
 		this._hp = getGameConfig().START_HP;
 		this._gameTime = 0;
+		this._isNewBest = false;
 		this.notify();
 	}
 }

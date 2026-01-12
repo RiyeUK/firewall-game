@@ -350,6 +350,15 @@ export function GameCanvas() {
 						<br />
 						MOVE YOUR FIREWALL TO INTERCEPT ATTACKS
 					</div>
+					{reactiveGameState.todaysBestScore > 0 && (
+						<div
+							className="hacker-text text-cyan-400"
+							style={{ fontSize: "2rem" }}
+						>
+							TODAY'S BEST:{" "}
+							{String(reactiveGameState.todaysBestScore).padStart(6, "0")}
+						</div>
+					)}
 					<button
 						type="button"
 						onClick={handleStart}
@@ -377,32 +386,69 @@ export function GameCanvas() {
 					<div className="hacker-text" style={{ fontSize: "4rem" }}>
 						SYSTEM BREACH
 					</div>
-					<div className="hacker-text" style={{ fontSize: "1rem" }}>
-						Protecting your computer can be hard on your own. Add more sheilds
-						with a VPN.
-					</div>
+
 					<div className="hacker-text" style={{ fontSize: "3rem" }}>
 						FINAL SCORE: {String(reactiveGameState.score).padStart(6, "0")}
 					</div>
-					<div className="flex flex-col gap-4 items-center mt-6">
-						<input
-							type="email"
-							placeholder="EMAIL_ADDRESS"
-							className="hacker-text hacker-border bg-black/50 px-6 py-3 text-xl focus:outline-none focus:bg-cyan-500/10 transition-colors placeholder:text-cyan-500/50"
-						/>
-						<button
-							type="button"
-							className="px-8 py-3 hacker-border bg-transparent hacker-text text-xl hover:bg-cyan-500/20 transition-colors cursor-pointer"
+
+					{reactiveGameState.isNewBest && (
+						<div
+							className="hacker-text text-cyan-400 animate-pulse"
+							style={{ fontSize: "2rem" }}
 						>
-							SEND OFFERS
-						</button>
+							🏆 NEW BEST SCORE TODAY! 🏆
+						</div>
+					)}
+
+					{!reactiveGameState.isNewBest &&
+						reactiveGameState.todaysBestScore > 0 && (
+							<div
+								className="hacker-text text-cyan-600"
+								style={{ fontSize: "1.5rem" }}
+							>
+								TODAY'S BEST:{" "}
+								{String(reactiveGameState.todaysBestScore).padStart(6, "0")}
+							</div>
+						)}
+
+					<div className="flex flex-col gap-6 items-center mt-8 max-w-3xl px-8">
+						<div
+							className="hacker-text text-center"
+							style={{ fontSize: "2.5rem" }}
+						>
+							CYBERGUARD VPN
+						</div>
+						<div
+							className="hacker-text text-center"
+							style={{ fontSize: "1.2rem", lineHeight: "1.8" }}
+						>
+							DEFENDING YOUR NETWORK IS HARD ALONE
+							<br />
+							CYBERGUARD VPN PROVIDES MILITARY-GRADE ENCRYPTION
+							<br />
+							PROTECTING YOU FROM THREATS 24/7
+						</div>
+						<div className="flex flex-col gap-4 items-center mt-4">
+							<input
+								type="email"
+								placeholder="ENTER_YOUR_EMAIL"
+								className="hacker-text hacker-border bg-black/50 px-8 py-4 text-xl focus:outline-none focus:bg-cyan-500/10 transition-colors placeholder:text-cyan-500/50 w-96"
+							/>
+							<button
+								type="button"
+								className="px-12 py-4 hacker-border bg-cyan-500/20 hacker-text text-xl hover:bg-cyan-500/40 transition-colors cursor-pointer w-96"
+							>
+								GET 30% OFF TODAY
+							</button>
+						</div>
 					</div>
+
 					<button
 						type="button"
 						onClick={handleRestart}
-						className="mt-4 px-8 py-4 hacker-border bg-transparent hacker-text text-2xl hover:bg-cyan-500/20 transition-colors cursor-pointer"
+						className="mt-8 px-8 py-4 hacker-border bg-transparent hacker-text text-2xl hover:bg-cyan-500/20 transition-colors cursor-pointer"
 					>
-						RESTART FIREWALL
+						RESTART DEFENSE
 					</button>
 				</div>
 			)}
