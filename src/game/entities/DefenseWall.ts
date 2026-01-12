@@ -38,6 +38,7 @@ export class DefenseWall {
 
 	private render(): void {
 		this.graphics.clear();
+
 		this.graphics.arc(
 			this.centerX,
 			this.centerY,
@@ -45,7 +46,10 @@ export class DefenseWall {
 			this.currentAngle - this.arcAngle / 2,
 			this.currentAngle + this.arcAngle / 2,
 		);
-		this.graphics.stroke({ width: this.thickness, color: this.color });
+		this.graphics.stroke({
+			width: 2,
+			color: this.color,
+		});
 	}
 
 	destroy(): void {

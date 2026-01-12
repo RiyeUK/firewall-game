@@ -1,30 +1,36 @@
-export const GAME_CONFIG = {
-	CANVAS_WIDTH: 800,
-	CANVAS_HEIGHT: 600,
+export function getGameConfig() {
+	const width = window.innerWidth;
+	const height = window.innerHeight;
+	const minDimension = Math.min(width, height);
 
-	PLANET_HP: 3,
+	return {
+		CANVAS_WIDTH: width,
+		CANVAS_HEIGHT: height,
 
-	// Central circle
-	CIRCLE_CENTER_X: 400,
-	CIRCLE_CENTER_Y: 700,
-	CIRCLE_RADIUS: 200,
+		PLANET_HP: 4,
 
-	// Defense wall
-	WALL_DISTANCE: 350,
-	WALL_ARC_ANGLE: Math.PI / 8,
-	WALL_THICKNESS: 5,
+		// Central circle
+		CIRCLE_CENTER_X: width / 2,
+		CIRCLE_CENTER_Y: height + height * 0.1, // 10% of screen height offset
+		CIRCLE_RADIUS: minDimension * 0.15,
 
-	// Particles
-	PARTICLE_RADIUS: 2,
-	PARTICLE_SPEED: 2,
-	PARTICLE_SPAWN_INTERVAL: 1000, // Initial spawn interval in ms
-	PARTICLE_SPAWN_DECREASE: 20, // Decrease interval by this much per second
-	MIN_SPAWN_INTERVAL: 200, // Minimum spawn interval
-	MAX_PARTICLES: 200,
+		// Defense wall
+		WALL_DISTANCE: minDimension * 0.25,
+		WALL_ARC_ANGLE: Math.PI / 8,
+		WALL_THICKNESS: minDimension * 0.008, // ~0.8% of min dimension
 
-	// Colours
-	COLOR_BACKGROUND: 0x000000,
-	COLOR_CIRCLE: 0xffffff,
-	COLOR_WALL: 0xffffff,
-	COLOR_PARTICLE: 0xffffff,
-} as const;
+		// Particles
+		PARTICLE_RADIUS: minDimension * 0.0005, // ~0.05% of min dimension
+		PARTICLE_SPEED: minDimension * 0.002, // ~0.2% of min dimension per frame
+		PARTICLE_SPAWN_INTERVAL: 1000,
+		PARTICLE_SPAWN_DECREASE: 20,
+		MIN_SPAWN_INTERVAL: 200,
+		MAX_PARTICLES: 200,
+
+		// Colours
+		COLOR_BACKGROUND: 0x000000,
+		COLOR_CIRCLE: 0x3acee2,
+		COLOR_WALL: 0x3acee2,
+		COLOR_PARTICLE: 0xff0000,
+	};
+}

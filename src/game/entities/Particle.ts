@@ -1,3 +1,4 @@
+import { GlowFilter } from "pixi-filters/glow";
 import { Graphics } from "pixi.js";
 
 export class Particle {
@@ -8,7 +9,7 @@ export class Particle {
 	public isActive: boolean;
 	private color: number;
 	private trail: Array<{ x: number; y: number }> = [];
-	private readonly maxTrailLength: number = 10;
+	private readonly maxTrailLength: number = 32;
 
 	constructor(
 		x: number,
@@ -65,18 +66,29 @@ export class Particle {
 				const point2 = this.trail[i + 1];
 
 				// Calculate alpha based on position in trail (older = more transparent)
-				const alpha = (i + 1) / this.trail.length;
+				const alpha = ((i + 1) / this.trail.length) * 0.8;
 
 				this.graphics
 					.moveTo(point1.x, point1.y)
 					.lineTo(point2.x, point2.y)
-					.stroke({ width: this.radius * 1.5, color: this.color, alpha });
+					.stroke({ width: this.radius * 2, color: this.color, alpha });
 			}
 		}
 
-		// Draw particle at current position
-		this.graphics.circle(this.position.x, this.position.y, this.radius);
-		this.graphics.fill({ color: this.color });
+		// Draw particle at current position with glow effect
+		const circle = this.graphics.circle(
+			this.position.x,
+			this.position.y,
+			this.radius,
+		);
+
+		circle.filters = new GlowFilter({
+			distance: this.radius * 2,
+			color: this.color,
+			quality: 0.2,
+			alpha: 0.8,
+		});
+		this.graphics.fill({ color: this.color, alpha: 1 });
 	}
 
 	reset(x: number, y: number, velocityX: number, velocityY: number): void {

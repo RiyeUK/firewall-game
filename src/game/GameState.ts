@@ -1,9 +1,9 @@
-import { GAME_CONFIG } from "./constants";
+import { getGameConfig } from "./constants";
 
 export class GameState {
 	private _score: number = 0;
 	private _isGameOver: boolean = false;
-	private _hp: number = GAME_CONFIG.PLANET_HP;
+	private _hp: number = getGameConfig().PLANET_HP;
 	private _gameTime: number = 0;
 	private listeners: Set<() => void> = new Set();
 
@@ -58,6 +58,7 @@ export class GameState {
 	reset(): void {
 		this._score = 0;
 		this._isGameOver = false;
+		this._hp = getGameConfig().PLANET_HP;
 		this._gameTime = 0;
 		this.notify();
 	}
